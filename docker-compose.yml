@@ -1,0 +1,34 @@
+networks:
+  kc-network:
+    driver: bridge
+
+volumes:
+  kc-postgres:
+services:
+# ** Keycloak **
+  keycloak:
+    container_name: keycloak
+    image: keycloak:local
+    build: .
+    ports:
+      - 8443:8443
+    environment:
+      - PROXY_ADDRESS_FORWARDING=true
+      - KC_PROXY=passthrough
+      - KC_HOSTNAME_STRICT_HTTPS=false
+    depends_on:
+      - kc-postgres
+    networks:
+      - kc-network
+# ** Postgres **
+  kc-postgres:
+    container_name: kc-postgres
+    image: postgres:16.3-alpine
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.local
+    volumes:
+      - kc-postgres:/var/lib/postgresql/data
+    networks:
+      - kc-network
