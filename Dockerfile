@@ -11,6 +11,9 @@ ENV KC_DB=postgres
 WORKDIR /opt/keycloak
 #* for demonstration purposes only, please make sure to use proper certificates in production instead
 RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
+#* Add the custom plugin to the Keycloak server
+#// ADD --chown=keycloak:keycloak --chmod=644 https://github.com/wadahiro/keycloak-discord/releases/download/v0.5.0/keycloak-discord-0.5.0.jar /opt/keycloak/providers/keycloak-discord-0.5.0.jar
+#! Build the Keycloak server
 RUN /opt/keycloak/bin/kc.sh build
 
 #* Second stage, copy the built artifacts from the previous stage

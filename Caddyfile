@@ -5,6 +5,6 @@ keycloak.localhost {
 			tls
 			tls_insecure_skip_verify
 		}
-		health_uri "/health/ready"
+		# health_uri "/health/ready"
 	}
 }
