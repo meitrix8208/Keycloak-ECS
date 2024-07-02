@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:24.0.5-0 as builder
+FROM quay.io/keycloak/keycloak:25.0.1-0 as builder
 
 #* Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -17,7 +17,7 @@ RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysi
 RUN /opt/keycloak/bin/kc.sh build
 
 #* Second stage, copy the built artifacts from the previous stage
-FROM quay.io/keycloak/keycloak:24.0.5-0
+FROM quay.io/keycloak/keycloak:25.0.1-0
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 #! change these values to point to a running postgres instance
