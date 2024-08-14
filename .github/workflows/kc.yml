@@ -17,7 +17,7 @@ jobs:
   deploy:
     name: Deploying to PROD Environment
     runs-on: ubuntu-latest
-    environment: dev
+    # environment: dev
 
     steps:
       - name: Checkout
