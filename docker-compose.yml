@@ -24,7 +24,7 @@ services:
 # ** Postgres **
   kc-postgres:
     container_name: kc-postgres
-    image: postgres:16.3-alpine
+    image: postgres:alpine
     ports:
       - 5432:5432
     env_file:
