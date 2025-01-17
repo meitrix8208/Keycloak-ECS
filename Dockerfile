@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:24.0 AS builder
+FROM quay.io/keycloak/keycloak:25.0.2 AS builder
 
 #* Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -17,7 +17,7 @@ RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysi
 RUN /opt/keycloak/bin/kc.sh build
 
 #* Second stage, copy the built artifacts from the previous stage
-FROM quay.io/keycloak/keycloak:24.0
+FROM quay.io/keycloak/keycloak:25.0.2
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 #! change these values to point to a running postgres instance
@@ -40,6 +40,7 @@ ENV JGROUPS_DISCOVERY_PROPERTIES=datasource_jndi_name=java:jboss/datasources/Key
 ENV KC_HOSTNAME_STRICT=false
 ENV KC_HOSTNAME_STRICT_BACKCHANNEL=false
 ENV KC_PROXY=passthrough
+ENV KC_HTTP_ENABLED=true
 # Enable the legacy observability interface
 ENV KC_LEGACY_OBSERVABILITY_INTERFACE=true
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]

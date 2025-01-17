@@ -12,6 +12,7 @@
     "MCVZ",
     "PKCS",
     "postgres",
+    "postgresql",
     "storepass",
     "storetype",
     "tkdf"
